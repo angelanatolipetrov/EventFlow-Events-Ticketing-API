@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using EventFlow.Infrastructure.Persistence;
 
 namespace EventFlow_Events___Ticketing_API
 {
@@ -7,16 +9,16 @@ namespace EventFlow_Events___Ticketing_API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Регистрация на DbContext
+            builder.Services.AddDbContext<EventFlowDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -24,12 +26,8 @@ namespace EventFlow_Events___Ticketing_API
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
     }

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace EventFlow.Domain.Entities
 {
-    public class Venue
+    public class TicketType
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Address { get; set; } = string.Empty;
-        public int Capacity { get; set; }
-        public ICollection<Event> Events { get; set; } = new List<Event>();
+        public decimal Price { get; set; }
+        public int Quantity { get; set; } 
+        public int AvailableCount { get; set; } 
+        public int EventId { get; set; }
+        public Event Event { get; set; } = null!;
     }
 }
